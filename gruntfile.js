@@ -8,8 +8,12 @@ module.exports = function(grunt) {
 				// banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			// },
 			utils: {
-				src: 'scripts/jquery/jquery.utils.js',
-				dest: 'scripts/jquery/jquery.utils.min.js'
+				files : {
+					'scripts/jrx/jrx.min.js' : [
+						'scripts/jrx/jrx.js',
+						'scripts/jrx/jrx.init.sample.js'
+					]
+				}
 			},
 			form: {
 				src: 'scripts/jquery/plugin/jquery.form.js',
@@ -21,7 +25,7 @@ module.exports = function(grunt) {
 			},
 			admin_plugin_package : {
 				files : {
-					'scripts/jquery/plugin/jquery.admin.ppg.js' : [
+					'scripts/jquery/plugin/jquery.plugin.pkg.js' : [
 						'scripts/jquery/plugin/jquery.navigate.js',
 						'scripts/jquery/plugin/jquery.dotdotdot.js',
 						'scripts/jquery/plugin/jquery.form.js',

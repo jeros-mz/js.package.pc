@@ -1,0 +1,21 @@
+{
+  "name": "1.0_jquery",
+  "version": "0.0.0",
+  "description": "Name : UI Script package ( jQuery-Based ) \r Version : 1.0",
+  "main": "",
+  "dependencies": {
+    "grunt-jsdoc": "^0.5.7",
+    "grunt": "^0.4.5",
+    "jsdoc": "^3.3.0-alpha9"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.5.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
