@@ -1,13 +1,4 @@
-/*	
- *	jrx 1.0.0
- *	
- *	Copyright (c) 2014 MZ jeros
- *
- *	Dual licensed under the MIT and GPL licenses.
- *	http://en.wikipedia.org/wiki/MIT_License
- *	http://en.wikipedia.org/wiki/GNU_General_Public_License
- */
-(function(document, window){
+/*! scripts package - v1.0.0 - 2014-09-12 */(function(document, window){
 	'use strict';
 	
 	/**
@@ -607,3 +598,221 @@ if (typeof Array.prototype.contains != 'function') {
 
 //============================================================
 
+;;
+/*
+ * @method : jquery.init
+ */
+(function( $, window, document){
+	'use strict';
+	
+	
+	jrx.define('g', function(fn){
+		$(function(){
+			if($.isFunction(fn)){
+				fn();
+			}
+		});
+	});
+	
+	jrx.define('p', function(fn){
+		$(function(){
+			if($.isFunction(fn)){
+				fn();
+			}
+		});
+	});
+	
+	jrx.define('isString', function(obj){
+		return $.type(obj) === 'string';
+	});
+	
+	jrx.define('isNumber', function(obj){
+		return $.type(obj) === 'number';
+	});
+	
+	jrx.define('isBoolean', function(obj){
+		return $.type(obj) === 'boolean';
+	});
+	
+	jrx.define('isObject', function(obj){
+		return $.type(obj) === 'object';
+	});
+	
+	jrx.define('isEmail', function(obj){
+		return $.regexp('email').test(obj);
+	});
+	
+	jrx.define('isUrl', function(obj){
+		return $.regexp('url').test(obj);
+	});
+	
+	/*
+	 * @define : validate
+	 * @desc : init, extend validate
+	 */
+	jrx.define('validate.init', function(){
+		/*
+        * @name : set jquery.validate extend
+        * @depends : {plugin} jquery.validate
+        */
+       	if($.type($.fn.validate) === 'function'){
+   			   			
+   			$.extend($.validator.messages, {
+                required: jrx.language.validate.required,
+                remote: jrx.language.validate.remote,
+                email: jrx.language.validate.email,
+                url: jrx.language.validate.url,
+                date: jrx.language.validate.date,
+                dateISO: jrx.language.validate.dateISO,
+                number: jrx.language.validate.number,
+                digits: jrx.language.validate.digits,
+                creditcard: jrx.language.validate.creditcard,
+                equalTo: jrx.language.validate.equalTo,
+                length: $.validator.format(jrx.language.validate.length),
+                maxlength: $.validator.format(jrx.language.validate.maxlength),
+                minlength: $.validator.format(jrx.language.validate.minlength),
+                rangelength: $.validator.format(jrx.language.validate.rangelength),
+                range: $.validator.format(jrx.language.validate.range),
+                max: $.validator.format(jrx.language.validate.max),
+                min: $.validator.format(jrx.language.validate.min),
+                engnum : $.validator.format(jrx.language.validate.engnum),
+                count: $.validator.format(jrx.language.validate.count)
+            });            
+
+            $.validator.addMethod('engnum', function(value, element, params){
+                return this.optional(element) || jrx.regexp('engnum').test(value);
+		    });
+
+            $.validator.addMethod('length', function(value, element, params){
+			    return this.optional(element) || value.length == element.getAttribute('length');
+		    });
+            
+            // addMethod : count
+    		$.validator.addMethod('count', function(value, element, params){
+    			return this.optional(element) || value >= params[0];
+    		});
+    		
+            $.validator.setDefaults({
+                ignore: '',
+                onkeyup: false,
+                onfocusout: false,
+                focusInvalid: true,
+                showErrors: function (errorMap, errorList) {
+
+                    $.log('showErrors');
+                    $.log(errorList);
+
+                    if (errorList.length === 0) return false;
+
+                    var labelWrap = $('<div />').addClass('label-lists'), textLabels = '', textAlert = '';
+
+                    $.each(errorList, function (i, v) {
+                        var _$element = $(v.element);
+                        if (i != 0) return;
+                        textLabels += $('<label />')
+						    .attr('for', _$element.attr('id'))
+						    .html('<strong>' + getMessage(_$element) + ' : </strong>' + (_$element.data('message') || v.message))
+						    .appendTo(labelWrap);
+                        if (i == 0) {
+                            textAlert += getMessage(_$element) + (_$element.data('message') || v.message);
+                        }
+                    });
+
+                    function getMessage(_$element) {
+                        return _$element.data('title')
+						    || $('[for=' + _$element.attr('id') + ']').text()
+						    || _$element.parent('label').text()
+						    || _$element.attr('placeholder')
+						    || _$element.attr('name');
+                    };
+
+                    $.stateAlarm(textAlert);
+                    return;
+                },
+                submitHandler: function (form) { form.submit(); }
+            });
+       	}
+	});
+	
+})( jQuery, window, document );;;
+/*
+ * @method : jquery.init
+ */
+(function( $, window, document){
+	
+	//======================== Valiable ==========================
+	var utils = $ || {};
+	
+	//============================================================
+	
+	//======================== mix $.utils =======================
+	
+	utils.jrx = jrx;
+	
+	$.each(jrx, function(v, i){
+		
+		if( utils[v] === undefined ){
+			utils[v] = jrx[v];
+		} else {
+			jrx.log('ooora!');
+		}
+	});
+	//============================================================
+	
+	//======================== Language ==========================
+	
+	//============================================================
+	
+	$(function(){			// document.ready
+		
+		//========================= variable =========================
+		var dateFormat = 'yy-mm-dd',
+			timeFormat = 'HH:mm',
+			appconfig = {
+				"useLog" : true
+			},
+			content_type = {
+				defaults : 'application/x-www-form-urlencoded; charset=UTF-8',
+				json : 'application/json'
+			},
+			$logo = $('#header_logo'),
+			$gnb = $('#nav'),
+			$lnb = $('#lnb'),
+			$contents = $('#contents'),
+			$page = $contents.find('.sub-content');
+		//============================================================
+		
+		//================== application configuration ===============
+		$.config(appconfig);
+		//============================================================
+		
+		//===================== set jquery ajax. ===================== contentType : content_type.defaults, 
+		$.ajaxSetup({ cache: false,
+        	converters: {
+				// Convert anything to text
+				"* text": window.String,
+				// Text to html (true = no transformation)
+				"text html": true,
+				// Evaluate text as a json expression
+				"text json": jQuery.parseJSON,
+				// Parse text as xml
+				"text xml": jQuery.parseXML
+			}
+        });
+		//============================================================
+		
+		//======================== datepicker ========================
+		if($.isFunction($.fn.datepicker)){
+			$.datepicker.setDefaults({
+				// showOn: "button",
+                // buttonImage: $.config('staticPath') + "images/ico_calendar.gif",
+                // buttonImageOnly: true,
+                dateFormat: dateFormat
+            });
+            
+			$('input[date]', $contents).datepicker();
+		}
+		//============================================================
+		
+	});
+})( jQuery, window, document );
